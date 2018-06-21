@@ -15,18 +15,20 @@ name: Stackdriver Monitoring and Alerting
 prefix: gmonitoring
 versions:
   - !ruby/object:Api::Product::Version
-    name: v3
-    base_url: https://monitoring.googleapis.com/v3
+    name: v1
+    base_url: https://monitoring.googleapis.com/v1
 scopes:
   - https://www.googleapis.com/auth/cloud-platform
 objects:
   - !ruby/object:Api::Resource
-    name: 'Monitoring'
+    name: 'AlertPolicy'
     base_url: |
-      /v3/{name}/alertPolicies
+      /v3/projects/{{project}}/alertPolicies
     input: true
     description: |
-      A Google Cloud Alerting instance.
+      A description of the conditions under which some aspect of your system is
+      considered to be "unhealthy" and the ways to notify people or services
+      about this state.
     references: !ruby/object:Api::Resource::ReferenceLinks
       guides:
         'Official Documentation':
@@ -35,10 +37,7 @@ objects:
 
     properties:
       - !ruby/object:Api::Type::String
-        name: alternativeLocationId
+        name: name
         description: |
-          Only applicable to STANDARD_HA tier which protects the instance
-          against zonal failures by provisioning it across two zones.
-          If provided, it must be a different zone from the one provided in
-          [locationId].
+          Required if the policy exists.
         input: true
