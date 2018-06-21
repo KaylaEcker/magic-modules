@@ -10,3 +10,47 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+overrides: !ruby/object:Provider::ResourceOverrides
+  monitoring: !ruby/object:Provider::Terraform::ResourceOverride
+    exclude: false
+    id_format: "{{project}}/{{region}}/{{name}}"
+    import_format: ["projects/{{project}}/locations/{{region}}/alertPolicies/{{name}}"]
+    custom_code: !ruby/object:Provider::Terraform::CustomCode
+      decoder: 'templates/terraform/decoders/monitoring.erb'
+      encoder: 'templates/terraform/encoders/monitoring.erb'
+      pre_update: 'templates/terraform/pre_update/monitoring.erb'
+    examples: |
+      ### Basic Usage
+      ```hcl
+      resource "google_monitoring" "test" {
+        name           = "%s"
+        memory_size_gb = 1
+      }
+      ```
+
+      ### Full Usage
+      ```hcl
+      resource "google_compute_network" "test" {
+        name = "%s"
+      }
+
+      resource "google_monitoring" "test" {
+        name           = "%s"
+        tier           = "STANDARD_HA"
+        memory_size_gb = 1
+
+        region                  = "us-central1"
+        location_id             = "us-central1-a"
+        alternative_location_id = "us-central1-f"
+
+        redis_version     = "REDIS_3_2"
+        display_name      = "Terraform Test monitoring"
+        reserved_ip_range = "192.168.0.0/29"
+
+        labels {
+          my_key    = "my_val"
+          other_key = "other_val"
+        }
+      }
+      ```
