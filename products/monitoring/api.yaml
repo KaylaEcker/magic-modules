@@ -40,4 +40,4 @@ objects:
         name: name
         description: |
           Required if the policy exists.
-        input: true
+        output: true
