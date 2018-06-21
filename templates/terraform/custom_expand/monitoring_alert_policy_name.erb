@@ -18,10 +18,10 @@ func expand<%= prefix -%><%= titlelize_property(property) -%>(v interface{}, d *
 		return nil, err
 	}
 
-	region, err := getRegion(d, config)
+	<!-- region, err := getRegion(d, config)
 	if err != nil {
 		return nil, err
-	}
+	} -->
 
 	return fmt.Sprintf("projects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]", project, region, v.(string)), nil
 }
