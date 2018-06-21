@@ -10,16 +10,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+--- !ruby/object:Provider::Terraform::Config
 overrides: !ruby/object:Provider::ResourceOverrides
   Monitoring: !ruby/object:Provider::Terraform::ResourceOverride
     exclude: false
-    id_format: "{{project}}/{{region}}/{{name}}"
-    import_format: ["projects/{{project}}/locations/{{region}}/alertPolicies/{{name}}"]
-    custom_code: !ruby/object:Provider::Terraform::CustomCode
-      decoder: 'templates/terraform/decoders/monitoring.erb'
-      encoder: 'templates/terraform/encoders/monitoring.erb'
-      pre_update: 'templates/terraform/pre_update/monitoring.erb'
+    id_format: "{{project}}/{{name}}"
+    # custom_code: !ruby/object:Provider::Terraform::CustomCode
+    #   decoder: 'templates/terraform/decoders/monitoring.erb'
+    #   encoder: 'templates/terraform/encoders/monitoring.erb'
+    #   pre_update: 'templates/terraform/pre_update/monitoring.erb'
     examples: |
       ### Basic Usage
       ```hcl
@@ -55,19 +54,19 @@ overrides: !ruby/object:Provider::ResourceOverrides
       }
       ```
     properties:
-      authorizedNetwork: !ruby/object:Provider::Terraform::PropertyOverride
-        default_from_api: true
-        custom_expand: 'templates/terraform/custom_expand/monitoring_authorized_network.erb'
-        diff_suppress_func: 'compareSelfLinkRelativePaths'
-      locationId: !ruby/object:Provider::Terraform::PropertyOverride
-        default_from_api: true
+      # authorizedNetwork: !ruby/object:Provider::Terraform::PropertyOverride
+      #   default_from_api: true
+      #   custom_expand: 'templates/terraform/custom_expand/monitoring_authorized_network.erb'
+      #   diff_suppress_func: 'compareSelfLinkRelativePaths'
+      # locationId: !ruby/object:Provider::Terraform::PropertyOverride
+      #   default_from_api: true
       name: !ruby/object:Provider::Terraform::PropertyOverride
-        custom_expand: 'templates/terraform/custom_expand/monitoring_name.erb'
+        custom_expand: 'templates/terraform/custom_expand/monitoring_alert_policy_name.erb'
         custom_flatten: 'templates/terraform/custom_flatten/name_from_self_link.erb'
       monitoringVersion: !ruby/object:Provider::Terraform::PropertyOverride
         default_from_api: true
-      region: !ruby/object:Provider::Terraform::PropertyOverride
-        required: false
-        default_from_api: true
-      reservedIpRange: !ruby/object:Provider::Terraform::PropertyOverride
-        default_from_api: true
+      # region: !ruby/object:Provider::Terraform::PropertyOverride
+      #   required: false
+      #   default_from_api: true
+      # reservedIpRange: !ruby/object:Provider::Terraform::PropertyOverride
+      #   default_from_api: true
