@@ -23,5 +23,5 @@ func expand<%= prefix -%><%= titlelize_property(property) -%>(v interface{}, d *
 		return nil, err
 	}
 
-	return fmt.Sprintf("projects/%s/locations/%s/instances/%s", project, region, v.(string)), nil
+	return fmt.Sprintf("projects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]", project, region, v.(string)), nil
 }
