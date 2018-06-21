@@ -12,7 +12,7 @@
 # limitations under the License.
 
 overrides: !ruby/object:Provider::ResourceOverrides
-  monitoring: !ruby/object:Provider::Terraform::ResourceOverride
+  Monitoring: !ruby/object:Provider::Terraform::ResourceOverride
     exclude: false
     id_format: "{{project}}/{{region}}/{{name}}"
     import_format: ["projects/{{project}}/locations/{{region}}/alertPolicies/{{name}}"]
@@ -44,7 +44,7 @@ overrides: !ruby/object:Provider::ResourceOverrides
         location_id             = "us-central1-a"
         alternative_location_id = "us-central1-f"
 
-        redis_version     = "REDIS_3_2"
+        monitoring_version     = "MONITORING_3_2"
         display_name      = "Terraform Test monitoring"
         reserved_ip_range = "192.168.0.0/29"
 
@@ -54,3 +54,20 @@ overrides: !ruby/object:Provider::ResourceOverrides
         }
       }
       ```
+    properties:
+      authorizedNetwork: !ruby/object:Provider::Terraform::PropertyOverride
+        default_from_api: true
+        custom_expand: 'templates/terraform/custom_expand/monitoring_authorized_network.erb'
+        diff_suppress_func: 'compareSelfLinkRelativePaths'
+      locationId: !ruby/object:Provider::Terraform::PropertyOverride
+        default_from_api: true
+      name: !ruby/object:Provider::Terraform::PropertyOverride
+        custom_expand: 'templates/terraform/custom_expand/monitoring_name.erb'
+        custom_flatten: 'templates/terraform/custom_flatten/name_from_self_link.erb'
+      monitoringVersion: !ruby/object:Provider::Terraform::PropertyOverride
+        default_from_api: true
+      region: !ruby/object:Provider::Terraform::PropertyOverride
+        required: false
+        default_from_api: true
+      reservedIpRange: !ruby/object:Provider::Terraform::PropertyOverride
+        default_from_api: true
