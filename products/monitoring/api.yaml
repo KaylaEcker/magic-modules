@@ -10,7 +10,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 --- !ruby/object:Api::Product
 name: Stackdriver Monitoring and Alerting
 prefix: gmonitoring
@@ -20,3 +19,26 @@ versions:
     base_url: https://monitoring.googleapis.com/v3
 scopes:
   - https://www.googleapis.com/auth/cloud-platform
+objects:
+  - !ruby/object:Api::Resource
+    name: 'Monitoring'
+    base_url: |
+      /v3/{name}/alertPolicies
+    input: true
+    description: |
+      A Google Cloud Alerting instance.
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+          'https://cloud.google.com/monitoring/docs/'
+      api: 'https://cloud.google.com/monitoring/api/ref_v3/rest/'
+
+    properties:
+      - !ruby/object:Api::Type::String
+        name: alternativeLocationId
+        description: |
+          Only applicable to STANDARD_HA tier which protects the instance
+          against zonal failures by provisioning it across two zones.
+          If provided, it must be a different zone from the one provided in
+          [locationId].
+        input: true
