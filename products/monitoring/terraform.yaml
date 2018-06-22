@@ -12,7 +12,7 @@
 # limitations under the License.
 --- !ruby/object:Provider::Terraform::Config
 overrides: !ruby/object:Provider::ResourceOverrides
-  Monitoring: !ruby/object:Provider::Terraform::ResourceOverride
+  AlertPolicy: !ruby/object:Provider::Terraform::ResourceOverride
     exclude: false
     id_format: "{{project}}/{{name}}"
     # custom_code: !ruby/object:Provider::Terraform::CustomCode
@@ -63,7 +63,7 @@ overrides: !ruby/object:Provider::ResourceOverrides
       name: !ruby/object:Provider::Terraform::PropertyOverride
         custom_expand: 'templates/terraform/custom_expand/monitoring_alert_policy_name.erb'
         custom_flatten: 'templates/terraform/custom_flatten/name_from_self_link.erb'
-      monitoringVersion: !ruby/object:Provider::Terraform::PropertyOverride
+      # monitoringVersion: !ruby/object:Provider::Terraform::PropertyOverride
         default_from_api: true
       # region: !ruby/object:Provider::Terraform::PropertyOverride
       #   required: false
