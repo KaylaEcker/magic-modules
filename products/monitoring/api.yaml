@@ -16,14 +16,13 @@ prefix: gmonitoring
 versions:
   - !ruby/object:Api::Product::Version
     name: v1
-    base_url: https://monitoring.googleapis.com/v1
+    base_url: https://monitoring.googleapis.com/v3
 scopes:
   - https://www.googleapis.com/auth/cloud-platform
 objects:
   - !ruby/object:Api::Resource
     name: 'AlertPolicy'
-    base_url: |
-      /v3/projects/{{project}}/alertPolicies
+    base_url: /projects/{{project}}/alertPolicies
     input: true
     description: |
       A description of the conditions under which some aspect of your system is
@@ -41,3 +40,48 @@ objects:
         description: |
           Required if the policy exists.
         output: true
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+         'A short name or phrase used to identify the policy in
+         dashboards, notifications, and incidents. To avoid confusion, don't use
+         the same display name for multiple policies in the same project. The
+         name is limited to 512 Unicode characters.'
+        required: true
+      - !ruby/object:Api::Type::Array
+        name: 'conditions'
+        description: |
+         'A list of conditions for the policy. The conditions are combined by
+         AND or OR according to the combiner field. If the combined conditions
+         evaluate to true, then an incident is created. A policy can have from
+         one to six conditions.'
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::String
+              name: 'name'
+              description: |
+                Required if the condition exists.
+            - !ruby/object:Api::Type::String
+              name: 'displayName'
+              description: |
+                A condition that compares a time series against a threshold.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'conditionThreshold'
+              description: |
+                cannot be set with conditionAbsent
+              properties:
+                - !ruby/object:Api::Type::String
+                  name: 'filter'
+                  description: |
+                    A filter that identifies which time series should be
+                    compared with the threshold.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'conditionAbsent'
+              description: |
+                cannot be set with conditionThreshold
+              properties:
+                - !ruby/object:Api::Type::String
+                  name: 'filter'
+                  description: |
+                    A filter that identifies which time series should be
+                    compared with the threshold.

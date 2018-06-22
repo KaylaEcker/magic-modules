@@ -78,13 +78,6 @@ func resource<%= resource_name -%>() *schema.Resource {
 func resource<%= resource_name -%>Create(d *schema.ResourceData, meta interface{}) error {
 	config := meta.(*Config)
 
-  <% if has_project -%>
-	project, err := getProject(d, config)
-	if err != nil {
-		return err
-  }
-  <% end -%>
-
 <% settable_properties.each do |prop| -%>
 	<%= prop.api_name -%>Prop, err := expand<%= resource_name -%><%= titlelize_property(prop) -%>(d.Get("<%= Google::StringUtils.underscore(prop.name) -%>"), d, config)
 	if err != nil {
@@ -123,6 +116,14 @@ func resource<%= resource_name -%>Create(d *schema.ResourceData, meta interface{
 	d.SetId(id)
 
 	<% unless object.async.nil? -%>
+
+	  <% if has_project -%>
+		project, err := getProject(d, config)
+		if err != nil {
+			return err
+	  }
+	  <% end -%>
+
 	op := &<%= api_name_lower -%>.Operation{}
 	err = Convert(res, op)
 	if err != nil {
@@ -338,13 +339,6 @@ func resource<%= resource_name -%>Update(d *schema.ResourceData, meta interface{
 func resource<%= resource_name -%>Delete(d *schema.ResourceData, meta interface{}) error {
 	config := meta.(*Config)
 
-  <% if has_project -%>
-	project, err := getProject(d, config)
-	if err != nil {
-		return err
-  }
-  <% end -%>
-
 	url, err := replaceVars(d, config, "<%= self_link_url(object) -%>")
 	if err != nil {
 		return err
@@ -358,6 +352,14 @@ func resource<%= resource_name -%>Delete(d *schema.ResourceData, meta interface{
 	}
 
 	<% unless object.async.nil? -%>
+
+	  <% if has_project -%>
+		project, err := getProject(d, config)
+		if err != nil {
+			return err
+	  }
+	  <% end -%>
+
 	op := &<%= api_name_lower -%>.Operation{}
 	err = Convert(res, op)
 	if err != nil {
