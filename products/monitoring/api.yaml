@@ -75,6 +75,15 @@ objects:
                   description: |
                     A filter that identifies which time series should be
                     compared with the threshold.
+                - !ruby/object:Api::Type::Time
+                  name: 'duration'
+                  description: |
+                    The amount of time that a time series must violate the
+                    threshold to be considered failing. Currently, only values
+                    that are a multiple of a minute--e.g., 0, 60, 120, or 300
+                    seconds--are supported. If an invalid value is given, an
+                    error will be returned.
+                  required: true
             - !ruby/object:Api::Type::NestedObject
               name: 'conditionAbsent'
               description: |
